@@ -1,1 +1,19 @@
-# http://api.stopforumspam.org/api?ip=91.186.18.61&f=json
+require 'JSON'
+
+# Spamcheck
+module Spamcheck
+  # Rules
+  module Rules
+    def self.stopforumspam(ip)
+      uri = URI.parse('http://api.stopforumspam.org/api?f=json&ip=' + ip.to_s)
+      res = Net::HTTP.start(uri.host, uri.port) do |http|
+        http.get(uri.request_uri)
+      end
+      response = res.body
+      result = JSON.parse(response)
+
+      result['success'] == 1 && result['ip']['appears'] == 1 ?
+        50 : 0
+    end
+  end
+end
