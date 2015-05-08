@@ -12,8 +12,11 @@ module Spamcheck
       response = res.body
       result = JSON.parse(response)
 
-      result['success'] == 1 && result['ip']['appears'] == 1 ?
-        50 : 0
+      if result['success'] == 1 && result['ip']['appears'] == 1
+        50
+      else
+        0
+      end
     end
   end
 end
