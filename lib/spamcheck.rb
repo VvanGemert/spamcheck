@@ -1,4 +1,6 @@
 require 'spamcheck/version'
+require 'bayes_motel'
+require 'rules/country'
 
 # Spamcheck
 module Spamcheck
@@ -6,8 +8,8 @@ module Spamcheck
 
   attr_accessor :settings
   DEFAULT_SETTINGS = {
-    spam_score: 40,
-    disabled_rules: []
+    store: 'file',
+    store_location: 'location_to_file'
   }
 
   def settings
@@ -19,37 +21,16 @@ module Spamcheck
     DEFAULT_SETTINGS.merge!(settings)
   end
 
-  def self.check(user, context = {})
-    score = {}
-    require_rules.each do |r|
-      score[r.to_sym] =
-        get_module('Spamcheck::Rules::' + r.capitalize)
-        .check(user, context)
-    end
-    count_total_and_classify(score)
+  def self.mark(namespace, type, message)
+    message['country'] = Spamcheck::Rules::Country.check(message['ip'])
+    corpse = BayesMotel::Persistence.read(namespace)
+    corpse.train(message, type)
+    corpse.cleanup
+    BayesMotel::Persistence.write(corpse)
   end
 
-  private
-
-  def self.get_module(str)
-    str.split('::').reduce(Object) do |mod, class_name|
-      mod.const_get(class_name)
-    end
-  end
-
-  def self.require_rules
-    list = []
-    Dir[File.dirname(__FILE__) + '/rules/*.rb'].each do |file|
-      list.push(file.split('/').last[0..-4])
-      require file
-    end
-    list - settings[:disabled_rules]
-  end
-
-  def self.count_total_and_classify(score)
-    score[:total] = score.values.map(&:to_i).reduce(:+)
-    spam_score = settings[:spam_score].to_i - 1
-    score[:spam] = score[:total] > spam_score ? true : false
-    score
+  def self.classify(namespace, message)
+    corpse = BayesMotel::Persistence.read(namespace)
+    corpse.classify(message)
   end
 end

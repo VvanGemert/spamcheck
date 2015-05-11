@@ -6,15 +6,9 @@ module Spamcheck
   module Rules
     # Country
     module Country
-      def self.check(user, _context)
-        country_info = get_country_by_ip(user['ip'])
-        case country_info['country_code']
-        when 'CN' then 10
-        when 'UA' then 8
-        when 'RU' then 8
-        when 'FR' then 4
-        else 0
-        end
+      def self.check(ip)
+        country_info = get_country_by_ip(ip)
+        country_info['country_code']
       end
 
       private

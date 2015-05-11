@@ -7,11 +7,11 @@ Gem::Specification.new do |spec|
   spec.name          = 'spamcheck'
   spec.version       = Spamcheck::VERSION
   spec.authors       = ['VvanGemert']
-  spec.email         = ['vincent@floorplanner.com']
-  spec.summary       = 'Spamcheck is a spam checker for forms'
+  spec.email         = 'vincent@floorplanner.com'
+  spec.summary       = 'Spamcheck is a simple spam checking gem.'
   spec.description   = ''
-  spec.homepage      = ''
-  spec.license       = 'MIT'
+  spec.homepage      = 'https://github.com/VvanGemert/spamcheck'
+  spec.licenses      = ['MIT']
 
   spec.files         = `git ls-files -z`.split('\x0')
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
@@ -20,6 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'json'
   spec.add_dependency 'dnsbl-client'
+  spec.add_dependency 'bayes_motel'
 
   spec.add_development_dependency 'bundler', '~> 1.7'
   spec.add_development_dependency 'rake', '~> 10.0'
