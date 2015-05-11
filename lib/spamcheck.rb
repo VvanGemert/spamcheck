@@ -3,6 +3,7 @@ require 'spamcheck/version'
 # Spamcheck
 module Spamcheck
   module_function
+
   attr_accessor :settings
   DEFAULT_SETTINGS = {
     spam_score: 40,
