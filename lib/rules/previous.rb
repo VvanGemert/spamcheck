@@ -2,15 +2,18 @@
 module Spamcheck
   # Rules
   module Rules
-    def self.previous(context)
-      previous_date = context[:previous_created_at]
-      case Time.now.to_i - previous_date.to_i
-      when 0..599 then 10
-      when 600..1799 then 8
-      when 1800..3599 then 6
-      when 3600..7199 then 5
-      when 7200..432_00 then 2
-      else 0
+    # Previous
+    module Previous
+      def self.check(_user, context)
+        previous_date = context[:previous_created_at]
+        case Time.now.to_i - previous_date.to_i
+        when 0..599 then 10
+        when 600..1799 then 8
+        when 1800..3599 then 6
+        when 3600..7199 then 5
+        when 7200..432_00 then 2
+        else 0
+        end
       end
     end
   end

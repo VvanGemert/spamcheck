@@ -15,7 +15,7 @@ class SpamcheckTest < Minitest::Test
       message_count: 5 }
 
     result = Spamcheck.check(user, context)
-    assert_equal 126, result[:score]
+    assert_equal 126, result[:total]
   end
 
   def test_simple_non_spam_message
@@ -30,6 +30,6 @@ class SpamcheckTest < Minitest::Test
       message_count: 40 }
 
     result = Spamcheck.check(user, context)
-    assert_equal 0, result[:score]
+    assert_equal 0, result[:total]
   end
 end
