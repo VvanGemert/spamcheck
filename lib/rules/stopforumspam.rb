@@ -15,6 +15,8 @@ module Spamcheck
         end
       end
 
+      private
+
       def self.do_request(ip)
         uri = URI.parse('http://api.stopforumspam.org/api?f=json&ip=' +
           ip.to_s)

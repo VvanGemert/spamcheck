@@ -1,6 +1,7 @@
 # Spamcheck
 
-TODO: Write a gem description
+Spamcheck is a simple gem which checks users and forum posts, comments and such for spam. 
+It uses a Bayes like filtering system which can be configured to tailor your needs.
 
 ## Installation
 
@@ -20,7 +21,13 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+You can use the gem with the following line:
+```ruby
+user = { 'ip' => '{ ip address }', 'email' => '{ email }', 'created_at' => '{ date time}', 'username' => '{ username }' }
+context = { 'title' => '{ Title }', 'content' => '{ message }', 'previous_created_at' => '{ date time}', 'message_count' => '{ number }'  }
+
+Spamcheck.check(user, context)
+```
 
 ## Contributing
 

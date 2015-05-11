@@ -11,6 +11,8 @@ module Spamcheck
           points_domain(domain)
       end
 
+      private
+
       def self.points_extension(ext)
         case ext.downcase
         when 'cn' then 10

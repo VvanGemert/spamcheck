@@ -17,6 +17,8 @@ module Spamcheck
         end
       end
 
+      private
+
       def self.get_country_by_ip(ip)
         url = 'https://vault.roomstyler.com/geo/ip2country.js?json=true&ip='
         uri = URI.parse(url + ip.to_s)
