@@ -33,10 +33,19 @@ Or install it yourself as:
 
     $ gem install spamcheck
 
+## Settings
+
+You can add the following code to a initializer or add it your worker:
+```ruby
+## Example
+Spamcheck.settings = { spam_score: 40, disabled_rules: ['stopforumspam', 'dnsblacklist', 'country'] }
+```
+
 ## Usage
 
 You can use the gem with the following line:
 ```ruby
+
 user = { 
   'ip' => '{ ip address }',
   'email' => '{ email }',
