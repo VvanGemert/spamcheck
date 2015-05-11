@@ -3,7 +3,7 @@
 Spamcheck is a simple gem which checks users and forum posts, comments and such for spam. 
 It uses a Bayes like filtering system which can be configured to tailor your needs.
 
-### The spam filter can take some time to process, I suggest adding the check to background job!
+#### The spam filter can take some time to process, I suggest adding the check to background job!
 
 The following checks are performed and awarded points accordingly:
 
