@@ -5,7 +5,8 @@ module Spamcheck
     # Created
     module Created
       def self.check(user, _context)
-        case Time.now.to_i - user[:created_at].to_i
+        time = Time.parse(user['created_at']).to_i
+        case Time.now.to_i - time
         when 0..599 then 10
         when 600..1799 then 8
         when 1800..3599 then 6

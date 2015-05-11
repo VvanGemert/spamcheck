@@ -1,0 +1,25 @@
+no_spam:
+  - message:
+      description: 'Simple user with simple message'
+      context:
+        title: 'Test message'
+        content: 'This is a normal message.'
+        previous_created_at: '2015-05-10 15:50:09'
+        message_count: 200
+      user:
+        username: ''
+        ip: '72.52.4.119'
+        email: 'test@nospam.com'
+        created_at: '2015-05-10 13:40:08'
+  - message:
+      description: 'Chinese visitor with message with one link'
+      context:
+        title: 'Test message'
+        content: 'This is a normal message.  <a href="http://www.link.com">http://www.link.com</a>'
+        previous_created_at: '2015-05-10 13:40:09'
+        message_count: 0
+      user:
+        username: ''
+        ip: '202.130.245.42'
+        email: 'test@gmail.com'
+        created_at: '2015-05-10 13:40:08'

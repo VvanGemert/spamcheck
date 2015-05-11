@@ -5,7 +5,7 @@ module Spamcheck
     # Messagecount
     module Messagecount
       def self.check(_user, context)
-        case context[:message_count].to_i
+        case context['message_count'].to_i
         when 0 then 10
         when 1..2 then 4
         when 3..10 then 2

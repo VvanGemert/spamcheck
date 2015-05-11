@@ -7,7 +7,7 @@ module Spamcheck
     # Stop Forum Spam
     module Stopforumspam
       def self.check(user, _context)
-        result = do_request(user[:ip])
+        result = do_request(user['ip'])
         if result['success'] == 1 && result['ip']['appears'] == 1
           50
         else

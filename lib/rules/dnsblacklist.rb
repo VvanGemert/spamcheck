@@ -8,11 +8,11 @@ module Spamcheck
     module Dnsblacklist
       def self.check(user, _context)
         c = DNSBL::Client.new
-        result = c.lookup(user[:ip])
+        result = c.lookup(user['ip'])
         case result.length
-        when 1 then 40
-        when 1..2 then 80
-        when 2..50 then 100
+        when 1 then 30
+        when 1..2 then 40
+        when 2..50 then 50
         else 0
         end
       end

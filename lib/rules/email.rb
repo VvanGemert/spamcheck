@@ -5,7 +5,7 @@ module Spamcheck
     # Email
     module Email
       def self.check(user, _context)
-        domain = user[:email].split('@').last
+        domain = user['email'].split('@').last
         ext = domain.split('.').last
         points_extension(ext) +
           points_domain(domain)
@@ -27,7 +27,7 @@ module Spamcheck
         when 'yahoo.com' then 8
         when 'outlook.com' then 5
         when 'hotmail.com' then 5
-        when 'mailn.pl' then 20
+        when 'yandex.ru' then 20
         else 0
         end
       end

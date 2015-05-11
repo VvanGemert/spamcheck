@@ -2,7 +2,7 @@ require 'spamcheck/version'
 
 # Spamcheck
 module Spamcheck
-  def self.check(user, context = nil)
+  def self.check(user, context = {})
     score = {}
     rules = require_rules
     rules.each do |r|
@@ -10,9 +10,10 @@ module Spamcheck
         get_module('Spamcheck::Rules::' + r.capitalize)
         .check(user, context)
     end
-    score[:total] = score.values.map(&:to_i).reduce(:+)
-    score
+    count_total_and_classify(score)
   end
+
+  private
 
   def self.get_module(str)
     str.split('::').reduce(Object) do |mod, class_name|
@@ -27,5 +28,11 @@ module Spamcheck
       require file
     end
     list
+  end
+
+  def self.count_total_and_classify(score)
+    score[:total] = score.values.map(&:to_i).reduce(:+)
+    score[:spam] = score[:total] > 39 ? true : false
+    score
   end
 end

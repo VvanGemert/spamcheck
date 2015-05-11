@@ -5,7 +5,7 @@ module Spamcheck
     # Links
     module Links
       def self.check(_user, context)
-        results = URI.extract(context[:message])
+        results = URI.extract(context['content'])
         case results.size
         when 10..50 then 10
         when 8..10 then 8

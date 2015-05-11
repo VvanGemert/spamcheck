@@ -5,7 +5,8 @@ module Spamcheck
     # Previous
     module Previous
       def self.check(_user, context)
-        previous_date = context[:previous_created_at]
+        time = Time.parse(context['previous_created_at']).to_i
+        previous_date = time
         case Time.now.to_i - previous_date.to_i
         when 0..599 then 10
         when 600..1799 then 8
