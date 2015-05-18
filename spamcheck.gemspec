@@ -20,7 +20,8 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'json'
   spec.add_dependency 'dnsbl-client'
-  spec.add_dependency 'bayes_motel'
+  spec.add_dependency 'classifier-reborn'
+  spec.add_dependency 'fast-stemmer'
 
   spec.add_development_dependency 'bundler', '~> 1.7'
   spec.add_development_dependency 'rake', '~> 10.0'

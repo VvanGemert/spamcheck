@@ -1,6 +1,7 @@
 require 'spamcheck/version'
-require 'bayes_motel'
+require 'classifier-reborn'
 require 'rules/country'
+require 'rules/dnsblacklist'
 
 # Spamcheck
 module Spamcheck
@@ -8,8 +9,8 @@ module Spamcheck
 
   attr_accessor :settings
   DEFAULT_SETTINGS = {
-    store: 'file',
-    store_location: 'location_to_file'
+    storage: 'disk',
+    store_location: 'spamcheck.dat'
   }
 
   def settings
@@ -21,16 +22,38 @@ module Spamcheck
     DEFAULT_SETTINGS.merge!(settings)
   end
 
-  def self.mark(namespace, type, message)
-    message['country'] = Spamcheck::Rules::Country.check(message['ip'])
-    corpse = BayesMotel::Persistence.read(namespace)
-    corpse.train(message, type)
-    corpse.cleanup
-    BayesMotel::Persistence.write(corpse)
+  def self.mark(category, text)
+    classifier = load_classifier
+    if category == 'spam'
+      classifier.train_spam(text)
+    else
+      classifier.train_ham(text)
+    end
+    store_classifier(classifier)
   end
 
-  def self.classify(namespace, message)
-    corpse = BayesMotel::Persistence.read(namespace)
-    corpse.classify(message)
+  def self.spam?(text)
+    classifier = load_classifier
+    classifier.classify(text)
+  end
+
+  private
+
+  def self.persistence
+    return @store if @store
+    if settings[:storage] == 'disk'
+      require 'storage/disk'
+      @store = Storage::Disk.new(settings)
+    end
+  end
+
+  def self.store_classifier(classifier)
+    persistence
+    @classifier = @store.save(classifier)
+  end
+
+  def self.load_classifier
+    persistence
+    @classifier = @store.retrieve
   end
 end
