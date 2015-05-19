@@ -1,5 +1,5 @@
 require 'spamcheck/version'
-require 'classifier-reborn'
+require 'spamcheck/classifier'
 require 'rules/country'
 require 'rules/dnsblacklist'
 
@@ -22,19 +22,20 @@ module Spamcheck
     DEFAULT_SETTINGS.merge!(settings)
   end
 
-  def self.mark(category, text)
+  def self.mark(type, text)
     classifier = load_classifier
-    if category == 'spam'
-      classifier.train_spam(text)
-    else
-      classifier.train_ham(text)
-    end
+    classifier.mark(type, text)
     store_classifier(classifier)
   end
 
   def self.spam?(text)
     classifier = load_classifier
     classifier.classify(text)
+  end
+
+  def self.export
+    classifier = load_classifier
+    classifier.export
   end
 
   private

@@ -8,7 +8,7 @@ module Storage
     def retrieve
       decompress(File.read(@settings[:store_location]))
       rescue Errno::ENOENT
-        classifier = ClassifierReborn::Bayes.new 'spam', 'ham'
+        classifier = Spamcheck::Classifier.new
         compressed_data = compress(classifier)
         store(compressed_data)
         classifier
