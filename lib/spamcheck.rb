@@ -42,10 +42,10 @@ module Spamcheck
 
   def self.persistence
     return @store if @store
-    if settings[:storage] == 'disk'
-      require 'storage/disk'
-      @store = Storage::Disk.new(settings)
-    end
+    mod = settings[:storage]
+    require 'storage/' + mod
+    @store = Object.const_get('Storage').
+             const_get(mod.capitalize).new(settings)
   end
 
   def self.store_classifier(classifier)
