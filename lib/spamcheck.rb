@@ -38,14 +38,21 @@ module Spamcheck
     classifier.export
   end
 
+  def self.import(data)
+    classifier = load_classifier
+    classifier.import(data)
+    store_classifier(classifier)
+    true
+  end
+
   private
 
   def self.persistence
     return @store if @store
     mod = settings[:storage]
     require 'storage/' + mod
-    @store = Object.const_get('Storage').
-             const_get(mod.capitalize).new(settings)
+    @store = Object.const_get('Storage')
+             .const_get(mod.capitalize).new(settings)
   end
 
   def self.store_classifier(classifier)

@@ -23,5 +23,9 @@ module Spamcheck
     def export
       @classifier.export
     end
+
+    def import(data)
+      @classifier.import(data)
+    end
   end
 end
