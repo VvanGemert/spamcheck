@@ -49,10 +49,10 @@ module Spamcheck
 
   def self.persistence
     return @store if @store
-    mod = settings[:storage]
-    require 'storage/' + mod
+    store = settings[:storage]
+    require 'storage/' + store
     @store = Object.const_get('Storage')
-             .const_get(mod.capitalize).new(settings)
+             .const_get(store.capitalize).new(settings)
   end
 
   def self.store_classifier(classifier)
