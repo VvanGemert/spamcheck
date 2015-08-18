@@ -18,6 +18,13 @@ module Storage
       store(compress(classifier))
     end
 
+    def clear
+      classifier = Spamcheck::Classifier.new
+      compressed_data = compress(classifier)
+      store(compressed_data)
+      true
+    end
+
     private
 
     def compress(data)

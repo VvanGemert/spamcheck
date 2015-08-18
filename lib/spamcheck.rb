@@ -30,7 +30,7 @@ module Spamcheck
 
   def self.spam?(text)
     classifier = load_classifier
-    classifier.classify(text)
+    classifier.classify(text) == 'Spam' ? true : false
   end
 
   def self.export
@@ -43,6 +43,11 @@ module Spamcheck
     classifier.import(data)
     store_classifier(classifier)
     true
+  end
+
+  def self.clear
+    persistence
+    @store.clear
   end
 
   private

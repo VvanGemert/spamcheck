@@ -27,5 +27,9 @@ module Spamcheck
     def import(data)
       @classifier.import(data)
     end
+
+    def classifications(text)
+      @classifier.classifications(text)
+    end
   end
 end
