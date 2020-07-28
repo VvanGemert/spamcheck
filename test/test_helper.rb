@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spamcheck'
 require 'minitest/autorun'
 require 'minitest/unit'

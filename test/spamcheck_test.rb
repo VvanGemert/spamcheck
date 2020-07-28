@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 # SpamcheckTest
@@ -23,7 +25,7 @@ class SpamcheckTest < Minitest::Test
     Spamcheck.mark(:spam, spamline)
     Spamcheck.mark(:spam, spamline)
 
-    50.times do |i|
+    50.times do |_i|
       line = Forgery(:lorem_ipsum).sentence(random: true)
       Spamcheck.mark(:ham, line)
     end

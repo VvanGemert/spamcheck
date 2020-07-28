@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'JSON'
 
 # Spamcheck
@@ -10,8 +12,6 @@ module Spamcheck
         country_info = get_country_by_ip(ip)
         country_info['country_code']
       end
-
-      private
 
       def self.get_country_by_ip(ip)
         url = 'http://www.telize.com/geoip/'

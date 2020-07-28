@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+require 'zlib'
+
 module Storage
   # Disk
   class Disk
@@ -7,11 +11,11 @@ module Storage
 
     def retrieve
       decompress(File.read(@settings[:store_location]))
-      rescue Errno::ENOENT
-        classifier = Spamcheck::Classifier.new
-        compressed_data = compress(classifier)
-        store(compressed_data)
-        classifier
+    rescue Errno::ENOENT
+      classifier = Spamcheck::Classifier.new
+      compressed_data = compress(classifier)
+      store(compressed_data)
+      classifier
     end
 
     def save(classifier)

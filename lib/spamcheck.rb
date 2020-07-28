@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spamcheck/version'
 require 'spamcheck/classifier'
 require 'rules/country'
@@ -7,19 +9,17 @@ require 'rules/dnsblacklist'
 module Spamcheck
   module_function
 
-  attr_accessor :settings
   DEFAULT_SETTINGS = {
     storage: 'disk',
     store_location: 'spamcheck.dat'
-  }
+  }.freeze
 
   def settings
-    return @settings unless @settings.nil?
-    DEFAULT_SETTINGS
+    @settings ||= DEFAULT_SETTINGS
   end
 
   def settings=(settings)
-    DEFAULT_SETTINGS.merge!(settings)
+    @settings = DEFAULT_SETTINGS.merge!(settings)
   end
 
   def self.mark(type, text)
@@ -30,7 +30,7 @@ module Spamcheck
 
   def self.spam?(text)
     classifier = load_classifier
-    classifier.classify(text) == 'Spam' ? true : false
+    classifier.classify(text) == 'Spam'
   end
 
   def self.export
@@ -50,14 +50,11 @@ module Spamcheck
     @store.clear
   end
 
-  private
-
   def self.persistence
-    return @store if @store
     store = settings[:storage]
     require 'storage/' + store
     @store = Object.const_get('Storage')
-             .const_get(store.capitalize).new(settings)
+                   .const_get(store.capitalize).new(settings)
   end
 
   def self.store_classifier(classifier)
